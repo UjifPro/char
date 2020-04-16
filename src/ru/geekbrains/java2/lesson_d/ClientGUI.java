@@ -4,6 +4,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.InputMethodListener;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileWriter;
 
 public class ClientGUI extends JFrame implements ActionListener, Thread.UncaughtExceptionHandler {
 
@@ -25,6 +29,7 @@ public class ClientGUI extends JFrame implements ActionListener, Thread.Uncaught
     private final JButton btnSend = new JButton("Send");
 
     private final JList<String> userList = new JList<>();
+
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(new Runnable() {
@@ -51,6 +56,7 @@ public class ClientGUI extends JFrame implements ActionListener, Thread.Uncaught
         log.setWrapStyleWord(true);
         log.setEditable(false);
         cbAlwaysOnTop.addActionListener(this);
+        btnSend.addActionListener(this);
 
         panelTop.add(tfIPAddress);
         panelTop.add(tfPort);
@@ -74,7 +80,16 @@ public class ClientGUI extends JFrame implements ActionListener, Thread.Uncaught
         Object src = e.getSource();
         if (src == cbAlwaysOnTop) {
             setAlwaysOnTop(cbAlwaysOnTop.isSelected());
-        } else {
+        }
+        else if (src == btnSend) {
+            log.append(tfLogin.getText() + ": " + tfMessage.getText() + "\n");
+            tfMessage.setText("");
+            //записать в файл
+        }
+        else if(src == btnLogin){
+            //создать файл
+        }
+        else{
             throw new RuntimeException("Unknown source:" + src);
         }
     }
